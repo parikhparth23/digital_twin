@@ -1,203 +1,54 @@
-/* ============================================================
-   Override Gradio's own theme CSS variables directly.
-   Gradio 6's Chatbot bubbles/panels/buttons are all colored via
-   these vars (e.g. .bubble-wrap { background: var(--background-fill-secondary) }
-   .user { background: var(--color-accent-soft) }), so redefining
-   the variables is far more reliable than chasing internal class
-   names, which change between Gradio versions.
-   ============================================================ */
-:root, .gradio-container {
-    --body-background-fill: #212121 !important;
-    --background-fill-primary: #212121 !important;
-    --background-fill-secondary: #212121 !important;
-    --border-color-primary: #3a3a3a !important;
-    --border-color-accent-subdued: #3a3a3a !important;
-    --body-text-color: #ececec !important;
-    --body-text-color-subdued: #9b9b9b !important;
-    --color-accent: #ececec !important;
-    --color-accent-soft: #2f2f2f !important;
-    --button-primary-background-fill: #ececec !important;
-    --button-primary-background-fill-hover: #d4d4d4 !important;
-    --button-primary-text-color: #212121 !important;
-    --button-secondary-background-fill: #2a2a2a !important;
-    --button-secondary-text-color: #ececec !important;
-    --input-background-fill: #2a2a2a !important;
-    --block-background-fill: transparent !important;
-    --block-border-width: 0px !important;
-    --shadow-drop: none !important;
-    --shadow-drop-lg: none !important;
+/* Modern Dark Theme Variables */
+:root {
+    --body-background-fill: #212121;
+    --background-fill-primary: #212121;
+    --color-accent: #ececec;
+    --border-color-primary: #3a3a3a;
 }
 
-* { box-sizing: border-box; }
-
-body, .gradio-container, .app {
-    background: #212121 !important;
-}
-
+/* Ensure the container matches the layout of professional chat apps */
 .gradio-container {
-    max-width: 780px !important;
+    max-width: 800px !important;
     margin: auto !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif !important;
 }
 
+/* Remove default footer */
 footer { display: none !important; }
 
-/* ---------- Hero ---------- */
-.hero {
-    text-align: center;
-    padding: 64px 20px 36px;
-}
-
-.hero h1 {
-    font-size: 26px;
-    font-weight: 600;
-    margin: 0 0 10px;
-    color: #ececec;
-    letter-spacing: -0.3px;
-}
-
-.hero p {
-    color: #9b9b9b;
-    font-size: 15px;
-    line-height: 1.5;
-    margin: 0 auto;
-    max-width: 460px;
-    font-weight: 400;
-}
-
-/* ---------- Chat window ---------- */
-/* Real Gradio 6 structure (verified against rendered DOM):
-   - .bubble-wrap = scrollable message panel
-   - .message-row = wraps EACH message; also carries class "bubble"
-     when layout="bubble" (a layout-mode flag, not a color target)
-   - .user / .bot = the actual colored message content div
-   - .message-buttons-left / .message-buttons-right = the copy/edit
-     icon toolbar under each message; ALSO carries class "bubble".
-     Do not style ".bubble" broadly or this toolbar gets boxed up
-     and looks like a second reply bubble. */
-#chatbot, #chatbot .bubble-wrap, #chatbot .panel-wrap {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-#chatbot .message-row {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-#chatbot .user {
-    background: #2a2a2a !important;
-    border: 1px solid #3a3a3a !important;
+/* Chat Bubble Customization */
+.message-wrap {
     border-radius: 16px !important;
-    color: #ececec !important;
+    padding: 12px 16px !important;
     font-size: 15px !important;
     line-height: 1.6 !important;
-    box-shadow: none !important;
 }
 
-#chatbot .bot {
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
+/* User Message Styling */
+.user .message-wrap {
+    background-color: #2a2a2a !important;
     color: #ececec !important;
-    font-size: 15px !important;
-    line-height: 1.6 !important;
-    padding-left: 2px !important;
-    box-shadow: none !important;
-}
-
-/* copy/edit toolbar under each message: keep it small and quiet,
-   not styled like a bubble */
-#chatbot .message-buttons-left,
-#chatbot .message-buttons-right {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    min-height: 0 !important;
-    opacity: 0.6;
-}
-
-#chatbot .message-buttons-left:hover,
-#chatbot .message-buttons-right:hover {
-    opacity: 1;
-}
-
-#chatbot .avatar-image {
-    border-radius: 50% !important;
     border: 1px solid #3a3a3a !important;
 }
 
-#chatbot ::-webkit-scrollbar { width: 6px; }
-#chatbot ::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-    border-radius: 8px;
+/* Bot Message Styling */
+.bot .message-wrap {
+    background-color: transparent !important;
+    color: #ececec !important;
+    padding-left: 0 !important;
 }
-#chatbot ::-webkit-scrollbar-track { background: transparent; }
 
-/* ---------- Input row ---------- */
-#input-row {
+/* Input Area */
+.chat-interface-container .input-container {
     background: #2a2a2a !important;
     border: 1px solid #3a3a3a !important;
-    border-radius: 26px !important;
-    padding: 8px 8px 8px 20px !important;
-    margin-top: 16px !important;
-    align-items: center !important;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 24px !important;
+    padding: 8px !important;
 }
 
-#input-row textarea {
-    background: transparent !important;
-    color: #ececec !important;
-    border: none !important;
-    box-shadow: none !important;
-    font-size: 15px !important;
-    padding: 10px 4px !important;
-}
-
-#input-row textarea::placeholder {
-    color: #9b9b9b !important;
-}
-
-#input-row button {
-    border-radius: 20px !important;
-    font-weight: 500 !important;
-    background: #ececec !important;
-    color: #212121 !important;
-    border: none !important;
-    box-shadow: none !important;
-    transition: opacity 0.15s ease;
-}
-
-#input-row button:hover {
-    opacity: 0.85 !important;
-}
-
-/* ---------- Example chips ---------- */
-.gr-samples-table {
-    margin-top: 18px !important;
-    gap: 8px !important;
-}
-
-.gr-samples-table button {
+/* Example Buttons */
+.sample-button {
     background: #2a2a2a !important;
     border: 1px solid #3a3a3a !important;
     color: #9b9b9b !important;
     border-radius: 16px !important;
-    font-size: 13px !important;
-    padding: 8px 14px !important;
-    box-shadow: none !important;
-    transition: all 0.15s ease;
-}
-
-.gr-samples-table button:hover {
-    border-color: #6b6b6b !important;
-    color: #ececec !important;
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 640px) {
-    .hero { padding: 40px 16px 24px; }
-    .hero h1 { font-size: 21px; }
-    .hero p { font-size: 13.5px; }
 }
