@@ -5,42 +5,44 @@ from openai import OpenAI
 from pypdf import PdfReader
 import gradio as gr
 
+# Load environment variables
 load_dotenv(override=True)
-openai = OpenAI()
+client = OpenAI()
 
 BASE_DIR = Path(__file__).resolve().parent
 FAVICON_PATH = BASE_DIR / "resources" / "favicon.png"
 
-# --- Content Loading ---
+# Load data
 def get_context():
-    reader = PdfReader(BASE_DIR / "resources" / "resume.pdf")
-    resume = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
-    with open(BASE_DIR / "resources" / "summary.txt", "r", encoding="utf-8") as f:
-        summary = f.read()
+    resume_path = BASE_DIR / "resources" / "resume.pdf"
+    summary_path = BASE_DIR / "resources" / "summary.txt"
+    
+    resume = ""
+    if resume_path.exists():
+        reader = PdfReader(resume_path)
+        resume = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+    
+    summary = summary_path.read_text(encoding="utf-8") if summary_path.exists() else ""
     return resume, summary
 
 resume, summary = get_context()
 
 SYSTEM_PROMPT = f"""
-You are a digital twin of Parth Parikh. 
-You answer questions about: Career, Engineering experience, Skills, Projects, Technical background.
-Represent Parth professionally.
+You are a digital twin of Parth Parikh. Answer questions about: Career, Engineering experience, Skills, Projects, Technical background.
 Profile: {summary}
 Resume: {resume}
-Rules: Stay professional. Do not invent info. If you don't know, say so. Explain you are an AI if asked.
+Rules: Be professional, don't invent info, admit if you don't know, and identify as an AI digital twin if asked.
 """
 
 def respond(message, history):
-    # Convert Gradio history format to OpenAI format
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     for human, assistant in history:
         messages.append({"role": "user", "content": human})
         messages.append({"role": "assistant", "content": assistant})
     messages.append({"role": "user", "content": message})
 
-    # Stream the response
-    stream = openai.chat.completions.create(
-        model="gpt-4o", # Ensure your environment has access to this model
+    stream = client.chat.completions.create(
+        model="gpt-4o",
         messages=messages,
         stream=True,
     )
@@ -51,9 +53,10 @@ def respond(message, history):
             partial += chunk.choices[0].delta.content
             yield partial
 
-# --- UI Setup ---
+# Load CSS
 css = Path("style.css").read_text() if Path("style.css").exists() else ""
 
+# Create Interface
 demo = gr.ChatInterface(
     fn=respond,
     title="Ask Parth AI",
@@ -68,10 +71,13 @@ demo = gr.ChatInterface(
     chatbot=gr.Chatbot(
         height=600, 
         show_label=False, 
-        bubble_full_width=False,
         avatar_images=(None, str(FAVICON_PATH) if FAVICON_PATH.exists() else None)
     )
 )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
+    demo.launch(
+        server_name="0.0.0.0", 
+        server_port=int(os.environ.get("PORT", 7860)),
+        favicon_path=str(FAVICON_PATH) if FAVICON_PATH.exists() else None
+    )
