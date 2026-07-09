@@ -4,7 +4,7 @@ from pypdf import PdfReader
 from IPython.display import Markdown, display
 import gradio as gr
 import json
-
+import os
 
 load_dotenv(override=True)
 openai = OpenAI()
@@ -59,4 +59,10 @@ def chat(message, history):
     response = openai.chat.completions.create(model="gpt-5.4-mini", messages=messages)
     return response.choices[0].message.content
 
-gr.ChatInterface(chat).launch(inbrowser=True)
+# gr.ChatInterface(chat).launch(inbrowser=True)
+
+
+gr.ChatInterface(chat).launch(
+    server_name="0.0.0.0",
+    server_port=int(os.environ.get("PORT", 7860)),
+)
