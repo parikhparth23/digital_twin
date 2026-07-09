@@ -1,0 +1,78 @@
+60-Second Pitch
+
+Hello, I am Parth Parikh — I'm a backend engineering leader with 14 years of experience building and scaling high-throughput systems at Reddit, Apple, Rakuten, Nokia, and Apexon. Over the past several years I've moved from hands-on backend engineering into technical leadership, and I'm now focused on two adjacent tracks: Senior/Staff Backend Engineering or Engineering Manager roles, and Agentic AI / GenAI roles where I can apply that backend and distributed-systems depth to building autonomous, LLM-powered systems. I'm based in the SF Bay Area, open to hybrid, in-person, or remote, and actively interviewing.
+
+
+Target Roles
+
+
+Senior / Staff Backend Engineering or Engineering Manager roles — leading backend or platform teams, owning technical strategy, scaling systems and people
+Agentic AI / GenAI Engineering (IC or leadership) — building agentic systems, LLM orchestration, applied GenAI infrastructure
+Open to both people-management and senior IC/staff-level technical leadership tracks depending on the org's needs
+
+
+Target companies: Startups, Mid-to-large tech companies, particularly those investing seriously in AI/agentic infrastructure or scaling backend platforms at high growth.
+
+
+Experience Snapshot (14 years)
+
+
+
+Skills
+
+Backend / Distributed Systems
+
+
+Languages: Python, Java, Go, Swift, Shell scripting
+Architecture: microservices, distributed systems, high-throughput/low-latency systems, API design
+Infrastructure: Kafka, Kubernetes, AWS/GCP, Docker
+Data: SQL/NoSQL
+Practices: system design, scalability, on-call/reliability, engineering management, cross-functional leadership
+
+
+Agentic AI / GenAI
+
+
+LLM orchestration and agentic frameworks: LangChain, LangGraph, AutoGen, CrewAI, custom agent frameworks
+RAG pipelines, vector databases: Pinecone, Weaviate, FAISS
+Prompt engineering, tool-use/function-calling design
+Model integration: OpenAI, Anthropic Claude, Google Gemini, open-source LLMs
+Applying backend/distributed-systems experience to productionizing AI agents at scale
+
+
+
+Work Authorization
+
+
+Currently on H-1B, will require H-1B transfer (current H-1B valid through December 2028)
+I-140 approved — green card process underway, category EB-2
+Will need the new employer to sponsor the remaining green card process
+
+
+
+Location & Work Mode
+
+
+Based in the SF Bay Area
+Open to: hybrid / remote / onsite
+Open to relocation: yes
+
+
+
+Compensation Expectations
+
+
+Target base salary: $250,000
+Open to discussing based on total compensation package, level, and role scope
+
+
+
+Other Common First-Call Questions
+
+
+Notice period: 2 weeks
+Current employer / reason for looking: Looking for a role that offers greater scope to combine backend engineering leadership with hands-on work in agentic AI/GenAI systems — an area I'm deeply motivated to grow into further.
+Interview availability: Flexible — available weekday and weekends, happy to accommodate the team's schedule
+Management experience: Have led and mentored engineering teams, including technical roadmap ownership, hiring involvement, and performance/growth conversations with direct reports
+Visa sponsorship needed for future roles: Yes — H-1B transfer + continued green card sponsorship (EB-2, I-140 approved)
+Preferred next step: Happy to schedule a call to go deeper on fit, team, and role scope
