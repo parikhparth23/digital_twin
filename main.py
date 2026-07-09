@@ -59,10 +59,26 @@ def chat(message, history):
     response = openai.chat.completions.create(model="gpt-5.4-mini", messages=messages)
     return response.choices[0].message.content
 
-# gr.ChatInterface(chat).launch(inbrowser=True)
 
+with gr.Blocks(
+    title="Parth Parikh's AI Digital Twin",
+    theme=gr.themes.Glass()
+) as demo:
 
-gr.ChatInterface(chat).launch(
+    gr.Markdown(
+        """
+        # 👋 Welcome to Parth's AI Digital Twin
+
+        ### Ask me about my career, experience, skills, projects, and background.
+
+        I am an AI assistant representing Parth's professional journey.
+        """
+    )
+
+    gr.ChatInterface(chat)
+
+demo.launch(
     server_name="0.0.0.0",
     server_port=int(os.environ.get("PORT", 7860)),
+    favicon_path="resources/favicon.png",
 )
