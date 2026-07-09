@@ -67,14 +67,7 @@ def chat_stream(message, history):
 css_path = Path("style.css")
 css = css_path.read_text() if css_path.exists() else ""
 
-with gr.Blocks(
-    title="Parth Parikh AI",
-    theme=gr.themes.Soft(
-        primary_hue="blue",
-        neutral_hue="slate",
-    ),
-    css=css,
-) as demo:
+with gr.Blocks(title="Parth Parikh AI") as demo:
     gr.HTML(
         """
         <div class="hero">
@@ -90,7 +83,6 @@ with gr.Blocks(
         height=650,
         show_label=False,
         avatar_images=(None, "resources/favicon.png"),
-        bubble_full_width=False,
     )
 
     with gr.Row(elem_id="input-row"):
@@ -140,4 +132,9 @@ demo.launch(
     server_name="0.0.0.0",
     server_port=int(os.environ.get("PORT", 7860)),
     favicon_path="resources/favicon.png",
+    theme=gr.themes.Soft(
+        primary_hue="blue",
+        neutral_hue="slate",
+    ),
+    css=css,
 )
