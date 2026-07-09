@@ -112,11 +112,10 @@ Ask about my experience, projects, and technical background.
 
 You can ask about:
 
-- Backend engineering
-- Distributed systems
-- AI projects
-- Cloud architecture
-- Technical experience
+- Tell me about yourself
+- What technologies does Parth work with?
+- What distributed systems has Parth built?
+- Explain Parth's AI experience
 """
     ).send()
 
