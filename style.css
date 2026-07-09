@@ -1,51 +1,81 @@
+/* Full desktop layout */
+
+html,
 body {
     background: #212121 !important;
 }
 
 
 .gradio-container {
-    max-width: 1100px !important;
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
 }
+
 
 
 /* Header */
 
 h1 {
-    text-align:center;
-    font-size:32px !important;
+    font-size: 36px !important;
+    text-align: center !important;
 }
 
 
-/* Chat area */
+.markdown {
+    text-align: center !important;
+}
+
+
+
+/* Chat */
 
 #chatbox {
-    border-radius:14px;
+    width: 100% !important;
+    height: 70vh !important;
 }
 
 
-/* User message */
-
-.message.user {
-    background:#2f2f2f !important;
+.chatbot {
+    width: 100% !important;
 }
 
 
-/* Assistant message */
 
-.message.bot {
-    background:transparent !important;
+/* Messages */
+
+.message {
+    font-size: 16px !important;
 }
 
 
-/* Input */
+
+/* Input area */
 
 textarea {
-    background:#2b2b2b !important;
-    border-radius:20px !important;
-    padding:15px !important;
+    min-height: 60px !important;
+    font-size: 16px !important;
 }
 
 
+.input-container {
+    width: 100% !important;
+}
+
+
+
+/* Hide footer */
+
+footer {
+    display:none !important;
+}
+
+
+
+/* Buttons */
+
 button {
-    border-radius:12px !important;
+    min-height:45px !important;
 }
