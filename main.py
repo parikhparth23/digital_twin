@@ -5,145 +5,136 @@ import gradio as gr
 import os
 from pathlib import Path
 
-
-# Load environment
 load_dotenv(override=True)
-
 openai = OpenAI()
 
-
-# Read resume
+# Load resume
 reader = PdfReader("resources/resume.pdf")
-
 resume = ""
 for page in reader.pages:
     text = page.extract_text()
     if text:
         resume += text
 
-
-# Read summary
+# Load summary
 with open("resources/summary.txt", "r", encoding="utf-8") as f:
     summary = f.read()
 
-
 system_prompt = f"""
-# Your role
-
-You are a digital twin running on a website.
-You represent Parth Parikh.
-
-You answer questions related to Parth's:
-- career
-- background
-- skills
-- experience
-- projects
-- technical expertise
-
-Here are the details of the person you represent:
-
+You are a digital twin of Parth Parikh.
+You answer questions about:
+- Career
+- Engineering experience
+- Skills
+- Projects
+- Technical background
+You represent Parth professionally when talking to recruiters,
+clients, and engineers.
+Profile information:
 {summary}
-
-
-Resume context:
-
+Resume:
 {resume}
-
-
-# Rules
-
-- Be professional and engaging.
-- Answer as if talking to a recruiter, client, or engineer visiting the website.
-- Stay focused on career and professional topics.
-- If asked, clearly explain that you are an AI digital twin.
-- Never invent information.
-- If you don't know something, say you don't know.
+Rules:
+- Stay focused on professional topics.
+- Do not invent information.
+- If you don't know something, say so.
+- If asked, explain you are an AI digital twin.
 """
 
 
-def chat(message, history):
-    messages = [
-        {
-            "role": "system",
-            "content": system_prompt
-        }
-    ]
+def chat_stream(message, history):
+    """Yields partial assistant text as it streams in from the model."""
+    messages = [{"role": "system", "content": system_prompt}]
+    for user_msg, assistant_msg in history:
+        messages.append({"role": "user", "content": user_msg})
+        messages.append({"role": "assistant", "content": assistant_msg})
+    messages.append({"role": "user", "content": message})
 
-    messages.extend(history)
-
-    messages.append(
-        {
-            "role": "user",
-            "content": message
-        }
-    )
-
-    response = openai.chat.completions.create(
+    stream = openai.chat.completions.create(
         model="gpt-5.4-mini",
-        messages=messages
+        messages=messages,
+        stream=True,
     )
 
-    return response.choices[0].message.content
+    partial = ""
+    for chunk in stream:
+        delta = chunk.choices[0].delta.content or ""
+        if delta:
+            partial += delta
+            yield partial
 
 
-# Load custom CSS
-css_file = Path("style.css")
-
-css = css_file.read_text() if css_file.exists() else ""
-
+css_path = Path("style.css")
+css = css_path.read_text() if css_path.exists() else ""
 
 with gr.Blocks(
     title="Parth Parikh AI",
-    theme=gr.themes.Base(
+    theme=gr.themes.Soft(
         primary_hue="blue",
-        neutral_hue="slate"
+        neutral_hue="slate",
     ),
-    css=css
+    css=css,
 ) as demo:
-
-
-    # Header
-    gr.Markdown(
+    gr.HTML(
         """
-        <div class="header">
-
-        <h1>🤖 Parth Parikh AI</h1>
-
-        <p>
-        Ask me about Parth's career, engineering experience,
-        projects, and technical background.
-        </p>
-
+        <div class="hero">
+            <div class="hero-avatar">PP</div>
+            <h1>Parth Parikh</h1>
+            <p>AI Digital Twin — ask about my career, engineering experience, projects, and technical background.</p>
         </div>
         """
     )
 
+    chatbot = gr.Chatbot(
+        elem_id="chatbot",
+        height=650,
+        show_label=False,
+        avatar_images=(None, "resources/favicon.png"),
+        bubble_full_width=False,
+    )
 
-    # Chat window
-    gr.ChatInterface(
-        fn=chat,
-        chatbot=gr.Chatbot(
-            height=650,
-            show_label=False,
-            avatar_images=(
-                None,
-                "resources/favicon.png"
-            )
-        ),
-        textbox=gr.Textbox(
+    with gr.Row(elem_id="input-row"):
+        message = gr.Textbox(
             placeholder="Message Parth AI...",
+            show_label=False,
             container=False,
-            scale=7
-        ),
+            scale=8,
+        )
+        send = gr.Button("Send", variant="primary", scale=1)
+
+    gr.Examples(
         examples=[
             "Tell me about Parth's backend engineering experience",
             "What distributed systems has Parth built?",
+            "Explain Parth's AI projects",
             "What technologies does Parth specialize in?",
-            "Explain Parth's AI projects"
-        ]
+        ],
+        inputs=message,
     )
 
+    def user_turn(msg, history):
+        # Immediately show the user's message, clear the box, add an empty bot slot
+        history = history + [(msg, "")]
+        return "", history
+
+    def bot_turn(history):
+        user_msg = history[-1][0]
+        prior_history = history[:-1]
+        for partial in chat_stream(user_msg, prior_history):
+            history[-1] = (user_msg, partial)
+            yield history
+
+    send.click(
+        user_turn, inputs=[message, chatbot], outputs=[message, chatbot]
+    ).then(
+        bot_turn, inputs=chatbot, outputs=chatbot
+    )
+
+    message.submit(
+        user_turn, inputs=[message, chatbot], outputs=[message, chatbot]
+    ).then(
+        bot_turn, inputs=chatbot, outputs=chatbot
+    )
 
 demo.launch(
     server_name="0.0.0.0",
