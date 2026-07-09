@@ -1,40 +1,57 @@
 :root {
+
     --body-background-fill: #212121;
     --background-fill-primary: #212121;
-    --color-accent: #ececec;
+
 }
+
 
 
 .gradio-container {
+
     max-width: 800px !important;
     margin: auto !important;
+
 }
+
 
 
 footer {
+
     display: none !important;
+
 }
+
 
 
 /* Chat bubbles */
 
 .message-wrap {
+
     border-radius: 16px !important;
     padding: 12px 16px !important;
     font-size: 15px !important;
+
 }
+
 
 
 .user .message-wrap {
+
     background-color: #2a2a2a !important;
     color: #ececec !important;
+
 }
+
 
 
 .bot .message-wrap {
+
     background-color: transparent !important;
     color: #ececec !important;
+
 }
+
 
 
 /* Input */
@@ -43,23 +60,28 @@ footer {
 
     background: #2a2a2a !important;
 
-    border:
-        1px solid
-        #3a3a3a !important;
+    border: 1px solid #3a3a3a !important;
 
     border-radius: 24px !important;
+
 }
 
 
-/* Remove labels */
+
+/* Remove extra labels */
 
 .label-wrap {
+
     display: none !important;
+
 }
 
 
-/* Dark page */
+
+/* Background */
 
 body {
+
     background: #212121 !important;
+
 }

@@ -1,46 +1,60 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 from openai import OpenAI
 from pypdf import PdfReader
 import gradio as gr
 
-# Load environment variables
+
+# Environment
 load_dotenv(override=True)
 
 client = OpenAI()
 
+
 BASE_DIR = Path(__file__).resolve().parent
+
 FAVICON_PATH = BASE_DIR / "resources" / "favicon.png"
 
 
-# Load resume + summary
+# Load resume and summary
 def get_context():
+
     resume_path = BASE_DIR / "resources" / "resume.pdf"
     summary_path = BASE_DIR / "resources" / "summary.txt"
 
     resume = ""
 
     if resume_path.exists():
+
         reader = PdfReader(resume_path)
+
         pages = []
 
         for page in reader.pages:
             text = page.extract_text()
+
             if text:
                 pages.append(text)
 
         resume = "\n".join(pages)
 
+
     summary = ""
 
     if summary_path.exists():
-        summary = summary_path.read_text(encoding="utf-8")
+        summary = summary_path.read_text(
+            encoding="utf-8"
+        )
+
 
     return resume, summary
 
 
+
 resume, summary = get_context()
+
 
 
 SYSTEM_PROMPT = f"""
@@ -61,12 +75,14 @@ Resume:
 
 Rules:
 - Be professional.
-- Do not invent information.
-- If information is unavailable, say you don't know.
+- Do not make up information.
+- If you do not know something, say so.
 - If asked who you are, explain you are an AI digital twin representing Parth Parikh.
 """
 
 
+
+# Chat function
 def respond(message, history):
 
     messages = [
@@ -76,20 +92,30 @@ def respond(message, history):
         }
     ]
 
-    for human, assistant in history:
-        messages.append(
-            {
-                "role": "user",
-                "content": human
-            }
-        )
 
-        messages.append(
-            {
-                "role": "assistant",
-                "content": assistant
-            }
-        )
+    # New Gradio message format
+    for item in history:
+
+        if item["role"] == "user":
+
+            messages.append(
+                {
+                    "role": "user",
+                    "content": item["content"]
+                }
+            )
+
+
+        elif item["role"] == "assistant":
+
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": item["content"]
+                }
+            )
+
+
 
     messages.append(
         {
@@ -99,23 +125,30 @@ def respond(message, history):
     )
 
 
-    stream = client.chat.completions.create(
+
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=messages,
-        stream=True,
+        stream=True
     )
 
 
-    partial = ""
 
-    for chunk in stream:
+    output = ""
+
+    for chunk in response:
+
         if chunk.choices[0].delta.content:
-            partial += chunk.choices[0].delta.content
-            yield partial
+
+            output += chunk.choices[0].delta.content
+
+            yield output
 
 
 
-# Load CSS
+
+
+# CSS
 css_path = BASE_DIR / "style.css"
 
 css = ""
@@ -125,64 +158,63 @@ if css_path.exists():
 
 
 
-# UI
-with gr.Blocks(
-    theme=gr.themes.Base(
-        primary_hue="gray",
-        neutral_hue="gray"
+# App
+demo = gr.ChatInterface(
+
+    fn=respond,
+
+    title="Ask Parth AI",
+
+    description=(
+        "Ask about my experience, projects, "
+        "and technical background."
     ),
+
     css=css,
-    title="Ask Parth AI"
-) as demo:
 
 
-    # favicon
-    if FAVICON_PATH.exists():
-        gr.HTML(
-            f"""
-            <link rel="icon" type="image/png" href="/file={FAVICON_PATH}">
-            """
-        )
+    examples=[
+        "Tell me about Parth's backend engineering experience",
+        "What distributed systems has Parth built?",
+        "Explain Parth's AI projects",
+    ],
 
 
-    gr.ChatInterface(
-        fn=respond,
+    chatbot=gr.Chatbot(
 
-        title="Ask Parth AI",
+        height=600,
 
-        description=(
-            "Ask about my experience, projects, "
-            "and technical background."
-        ),
+        show_label=False,
 
-        examples=[
-            "Tell me about Parth's backend engineering experience",
-            "What distributed systems has Parth built?",
-            "Explain Parth's AI projects",
-        ],
+        type="messages",
 
-        chatbot=gr.Chatbot(
-            height=600,
-            show_label=False,
-            avatar_images=(
-                None,
-                str(FAVICON_PATH)
-                if FAVICON_PATH.exists()
-                else None
-            )
+        avatar_images=(
+            None,
+            str(FAVICON_PATH)
+            if FAVICON_PATH.exists()
+            else None
         )
     )
+)
 
 
 
 if __name__ == "__main__":
 
     demo.launch(
+
         server_name="0.0.0.0",
+
         server_port=int(
             os.environ.get(
                 "PORT",
                 7860
             )
+        ),
+
+        favicon_path=(
+            str(FAVICON_PATH)
+            if FAVICON_PATH.exists()
+            else None
         )
     )
