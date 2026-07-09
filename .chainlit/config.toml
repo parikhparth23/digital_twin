@@ -1,17 +1,130 @@
+[project]
+
+user_env = []
+
+session_timeout = 3600
+
+user_session_timeout = 1296000
+
+cache = false
+
+persist_user_env = false
+
+mask_user_env = false
+
+allow_origins = ["*"]
+
+
+[features]
+
+unsafe_allow_html = false
+
+latex = false
+
+user_message_markdown = true
+
+user_message_autoscroll = true
+
+assistant_message_autoscroll = true
+
+auto_tag_thread = true
+
+edit_message = true
+
+allow_thread_sharing = false
+
+favorites = false
+
+
+[features.slack]
+
+reaction_on_message_received = false
+
+
+[features.spontaneous_file_upload]
+
+enabled = true
+
+accept = [
+    "application/pdf",
+    "image/png",
+    "image/jpeg"
+]
+
+max_files = 5
+
+max_size_mb = 50
+
+
+[features.audio]
+
+enabled = false
+
+sample_rate = 24000
+
+
+[features.mcp]
+
+enabled = false
+
+
+[features.mcp.sse]
+
+enabled = true
+
+
+[features.mcp.streamable-http]
+
+enabled = true
+
+
+[features.mcp.stdio]
+
+enabled = true
+
+allowed_executables = [
+    "npx",
+    "uvx"
+]
+
+
 [UI]
 
+# Assistant name shown in the app
 name = "Ask Parth AI"
 
-description = "Ask about my experience, projects, and technical background."
-
+# Dark ChatGPT style
 default_theme = "dark"
 
+# Desktop layout
 layout = "wide"
 
+# Hide sidebar
 default_sidebar_state = "hidden"
 
+# New chat confirmation
+confirm_new_chat = true
+
+# App description
+description = "Ask about my experience, projects, and technical background."
+
+# Hide Chainlit chain of thought UI
 cot = "hidden"
 
+# Your favicon/logo
 logo_file_url = "/public/favicon.png"
 
+# Assistant avatar
 default_avatar_file_url = "/public/favicon.png"
+
+avatar_size = 32
+
+# Custom CSS if needed later
+# custom_css = "/public/custom.css"
+
+alert_style = "modern"
+
+
+[meta]
+
+generated_by = "2.11.0"
