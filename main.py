@@ -11,7 +11,6 @@ load_dotenv()
 
 client = OpenAI()
 
-
 BASE_DIR = Path(__file__).parent
 
 
@@ -22,13 +21,15 @@ def load_context():
     pdf = BASE_DIR / "resources" / "resume.pdf"
 
     if pdf.exists():
+
         reader = PdfReader(pdf)
 
         for page in reader.pages:
+
             text = page.extract_text()
 
             if text:
-                resume += text
+                resume += text + "\n"
 
 
     summary = ""
@@ -36,7 +37,10 @@ def load_context():
     summary_file = BASE_DIR / "resources" / "summary.txt"
 
     if summary_file.exists():
-        summary = summary_file.read_text()
+
+        summary = summary_file.read_text(
+            encoding="utf-8"
+        )
 
 
     return resume, summary
@@ -50,6 +54,14 @@ resume, summary = load_context()
 SYSTEM = f"""
 You are Parth Parikh's AI digital twin.
 
+Answer questions about:
+- Career
+- Backend engineering
+- Distributed systems
+- Cloud architecture
+- AI projects
+- Technical background
+
 Profile:
 {summary}
 
@@ -58,15 +70,64 @@ Resume:
 
 Rules:
 - Do not hallucinate.
-- Answer professionally.
+- Do not invent experience.
+- If information is unavailable, say so.
+- Reply in the same language as the user.
 """
+
+
+
+@cl.set_starters
+async def set_starters():
+
+    return [
+
+        cl.Starter(
+            label="Backend Engineering Experience",
+            message="Tell me about Parth's backend engineering experience"
+        ),
+
+        cl.Starter(
+            label="Distributed Systems",
+            message="What distributed systems has Parth built?"
+        ),
+
+        cl.Starter(
+            label="AI Projects",
+            message="Explain Parth's AI projects"
+        ),
+
+    ]
+
+
+
+@cl.on_chat_start
+async def start():
+
+    await cl.Message(
+        content="""
+# 👋 Ask Parth AI
+
+Ask about my experience, projects, and technical background.
+
+You can ask about:
+
+- Backend engineering
+- Distributed systems
+- AI projects
+- Cloud architecture
+- Technical experience
+"""
+    ).send()
 
 
 
 @cl.on_message
 async def main(message: cl.Message):
 
-    response = cl.Message(content="")
+    response = cl.Message(
+        content=""
+    )
 
     await response.send()
 
@@ -77,12 +138,12 @@ async def main(message: cl.Message):
 
         messages=[
             {
-                "role":"system",
-                "content":SYSTEM
+                "role": "system",
+                "content": SYSTEM
             },
             {
-                "role":"user",
-                "content":message.content
+                "role": "user",
+                "content": message.content
             }
         ],
 
@@ -95,6 +156,7 @@ async def main(message: cl.Message):
         token = chunk.choices[0].delta.content
 
         if token:
+
             await response.stream_token(token)
 
 
