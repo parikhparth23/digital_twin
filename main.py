@@ -133,7 +133,7 @@ async def main(message: cl.Message):
 
     stream = client.chat.completions.create(
 
-        model="gpt-4o",
+        model="gpt-5.4-mini",
 
         messages=[
             {
