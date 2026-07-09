@@ -66,35 +66,61 @@ footer { display: none !important; }
 }
 
 /* ---------- Chat window ---------- */
-/* .bubble-wrap is the real Gradio 6 class for the scrollable
-   message panel; it inherits --background-fill-secondary above,
-   but we pin it directly too in case of specificity issues. */
+/* Real Gradio 6 structure (verified against rendered DOM):
+   - .bubble-wrap = scrollable message panel
+   - .message-row = wraps EACH message; also carries class "bubble"
+     when layout="bubble" (a layout-mode flag, not a color target)
+   - .user / .bot = the actual colored message content div
+   - .message-buttons-left / .message-buttons-right = the copy/edit
+     icon toolbar under each message; ALSO carries class "bubble".
+     Do not style ".bubble" broadly or this toolbar gets boxed up
+     and looks like a second reply bubble. */
 #chatbot, #chatbot .bubble-wrap, #chatbot .panel-wrap {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-/* individual message bubbles */
-#chatbot .bubble {
+#chatbot .message-row {
+    background: transparent !important;
     box-shadow: none !important;
-    border-radius: 16px !important;
-    font-size: 15px !important;
-    line-height: 1.6 !important;
 }
 
-#chatbot .bubble.user {
+#chatbot .user {
     background: #2a2a2a !important;
     border: 1px solid #3a3a3a !important;
+    border-radius: 16px !important;
     color: #ececec !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    box-shadow: none !important;
 }
 
-#chatbot .bubble.bot {
+#chatbot .bot {
     background: transparent !important;
     border: none !important;
+    border-radius: 0 !important;
     color: #ececec !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
     padding-left: 2px !important;
     box-shadow: none !important;
+}
+
+/* copy/edit toolbar under each message: keep it small and quiet,
+   not styled like a bubble */
+#chatbot .message-buttons-left,
+#chatbot .message-buttons-right {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-height: 0 !important;
+    opacity: 0.6;
+}
+
+#chatbot .message-buttons-left:hover,
+#chatbot .message-buttons-right:hover {
+    opacity: 1;
 }
 
 #chatbot .avatar-image {

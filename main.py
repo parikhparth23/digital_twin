@@ -74,8 +74,8 @@ with gr.Blocks(title="AI Digital Twin of Parth Parikh") as demo:
     gr.HTML(
         """
         <div class="hero">
-            <h1>Parth Parikh</h1>
-            <p>Software Engineer — ask about my experience, projects, and technical background.</p>
+            <h1>Ask Parth AI</h1>
+            <p>Ask about my experience, projects, and technical background.</p>
         </div>
         """
     )
@@ -121,14 +121,11 @@ with gr.Blocks(title="AI Digital Twin of Parth Parikh") as demo:
             history[-1] = {"role": "assistant", "content": partial}
             yield history
 
-    send.click(
-        user_turn, inputs=[message, chatbot], outputs=[message, chatbot]
-    ).then(
-        bot_turn, inputs=chatbot, outputs=chatbot
-    )
-
-    message.submit(
-        user_turn, inputs=[message, chatbot], outputs=[message, chatbot]
+    gr.on(
+        triggers=[send.click, message.submit],
+        fn=user_turn,
+        inputs=[message, chatbot],
+        outputs=[message, chatbot],
     ).then(
         bot_turn, inputs=chatbot, outputs=chatbot
     )
