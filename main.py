@@ -8,8 +8,11 @@ from pathlib import Path
 load_dotenv(override=True)
 openai = OpenAI()
 
+BASE_DIR = Path(__file__).resolve().parent
+FAVICON_PATH = BASE_DIR / "resources" / "favicon.png"
+
 # Load resume
-reader = PdfReader("resources/resume.pdf")
+reader = PdfReader(BASE_DIR / "resources" / "resume.pdf")
 resume = ""
 for page in reader.pages:
     text = page.extract_text()
@@ -17,7 +20,7 @@ for page in reader.pages:
         resume += text
 
 # Load summary
-with open("resources/summary.txt", "r", encoding="utf-8") as f:
+with open(BASE_DIR / "resources" / "summary.txt", "r", encoding="utf-8") as f:
     summary = f.read()
 
 system_prompt = f"""
@@ -67,13 +70,12 @@ def chat_stream(message, history):
 css_path = Path("style.css")
 css = css_path.read_text() if css_path.exists() else ""
 
-with gr.Blocks(title="Parth Parikh AI") as demo:
+with gr.Blocks(title="AI Digital Twin of Parth Parikh") as demo:
     gr.HTML(
         """
         <div class="hero">
-            <div class="hero-avatar">PP</div>
             <h1>Parth Parikh</h1>
-            <p>AI Digital Twin — ask about my career, engineering experience, projects, and technical background.</p>
+            <p>Software Engineer — ask about my experience, projects, and technical background.</p>
         </div>
         """
     )
@@ -82,12 +84,12 @@ with gr.Blocks(title="Parth Parikh AI") as demo:
         elem_id="chatbot",
         height=650,
         show_label=False,
-        avatar_images=(None, "resources/favicon.png"),
+        avatar_images=(None, str(FAVICON_PATH) if FAVICON_PATH.exists() else None),
     )
 
     with gr.Row(elem_id="input-row"):
         message = gr.Textbox(
-            placeholder="Message Parth AI...",
+            placeholder="Message Parth...",
             show_label=False,
             container=False,
             scale=8,
@@ -128,10 +130,13 @@ with gr.Blocks(title="Parth Parikh AI") as demo:
         bot_turn, inputs=chatbot, outputs=chatbot
     )
 
+if not FAVICON_PATH.exists():
+    print(f"[warning] favicon not found at {FAVICON_PATH} — tab will use default icon")
+
 demo.launch(
     server_name="0.0.0.0",
     server_port=int(os.environ.get("PORT", 7860)),
-    favicon_path="resources/favicon.png",
+    favicon_path=str(FAVICON_PATH) if FAVICON_PATH.exists() else None,
     theme=gr.themes.Soft(
         primary_hue="blue",
         neutral_hue="slate",
