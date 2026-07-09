@@ -1,17 +1,20 @@
 from dotenv import load_dotenv
 from openai import OpenAI
 from pypdf import PdfReader
-from IPython.display import Markdown, display
 import gradio as gr
-import json
 import os
 from pathlib import Path
 
+
+# Load environment
 load_dotenv(override=True)
+
 openai = OpenAI()
 
 
+# Read resume
 reader = PdfReader("resources/resume.pdf")
+
 resume = ""
 for page in reader.pages:
     text = page.extract_text()
@@ -19,67 +22,128 @@ for page in reader.pages:
         resume += text
 
 
+# Read summary
 with open("resources/summary.txt", "r", encoding="utf-8") as f:
     summary = f.read()
 
 
 system_prompt = f"""
-
 # Your role
 
-You are a digital twin running on a website, chatting with visitors of the website.
-You represent the person who's website you are on.
-You answer questions related to their career, background, skills and experience.
+You are a digital twin running on a website.
+You represent Parth Parikh.
 
-Here are the details of the person you are representing:
+You answer questions related to Parth's:
+- career
+- background
+- skills
+- experience
+- projects
+- technical expertise
+
+Here are the details of the person you represent:
 
 {summary}
 
-If asked, you explain clearly that you are an AI that is the digital twin of this person.
 
-# Context
-
-Here is a summary of the person's Resume so that you can answer questions:
+Resume context:
 
 {resume}
 
+
 # Rules
 
-Engage with the user. Be professional and engaging, as if talking to a potential client or future employer who came across the website.
-Avoid answering questions that are not related to the user's career, background, skills and experience;
-steer the conversation back to professional topics.
-
-Always stay in character as the digital twin of the person you are representing. Represent the person.
-
-IMPORTANT: If you don't know the answer, say so. Never make up an answer.
-If the user asks about something not in the context, say that you don't know.
+- Be professional and engaging.
+- Answer as if talking to a recruiter, client, or engineer visiting the website.
+- Stay focused on career and professional topics.
+- If asked, clearly explain that you are an AI digital twin.
+- Never invent information.
+- If you don't know something, say you don't know.
 """
 
+
 def chat(message, history):
-    messages = [{"role": "system", "content": system_prompt}] + history + [{"role": "user", "content": message}]
-    response = openai.chat.completions.create(model="gpt-5.4-mini", messages=messages)
+    messages = [
+        {
+            "role": "system",
+            "content": system_prompt
+        }
+    ]
+
+    messages.extend(history)
+
+    messages.append(
+        {
+            "role": "user",
+            "content": message
+        }
+    )
+
+    response = openai.chat.completions.create(
+        model="gpt-5.4-mini",
+        messages=messages
+    )
+
     return response.choices[0].message.content
 
 
-css = Path("style.css").read_text()
+# Load custom CSS
+css_file = Path("style.css")
+
+css = css_file.read_text() if css_file.exists() else ""
+
 
 with gr.Blocks(
-    title="Parth Parikh's AI Digital Twin",
-    theme=gr.themes.Glass(),
+    title="Parth Parikh AI",
+    theme=gr.themes.Base(
+        primary_hue="blue",
+        neutral_hue="slate"
+    ),
     css=css
 ) as demo:
 
+
+    # Header
     gr.Markdown(
         """
-        # 👋 Welcome to Parth's AI Digital Twin
+        <div class="header">
 
-        ### Ask me about my career, experience, skills, projects, and background.
+        <h1>🤖 Parth Parikh AI</h1>
 
-        I am an AI assistant representing Parth's professional journey.
+        <p>
+        Ask me about Parth's career, engineering experience,
+        projects, and technical background.
+        </p>
+
+        </div>
         """
     )
 
-    gr.ChatInterface(chat)
+
+    # Chat window
+    gr.ChatInterface(
+        fn=chat,
+        chatbot=gr.Chatbot(
+            height=650,
+            show_label=False,
+            avatar_images=(
+                None,
+                "resources/favicon.png"
+            )
+        ),
+        textbox=gr.Textbox(
+            placeholder="Message Parth AI...",
+            container=False,
+            scale=7
+        ),
+        examples=[
+            "Tell me about Parth's backend engineering experience",
+            "What distributed systems has Parth built?",
+            "What technologies does Parth specialize in?",
+            "Explain Parth's AI projects"
+        ]
+    )
+
 
 demo.launch(
     server_name="0.0.0.0",

@@ -1,26 +1,46 @@
 body {
-    background: #0f172a;
+    background: #212121 !important;
 }
+
 
 .gradio-container {
-    max-width: 1000px !important;
-    margin: auto;
+    max-width: 900px !important;
+    margin: auto !important;
+    background: #212121 !important;
 }
 
-#header {
+
+.header {
     text-align: center;
-    padding: 30px;
+    padding: 30px 0;
 }
 
-#header h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
+
+.header h1 {
+    font-size: 36px;
+    font-weight: 700;
 }
 
-#header p {
-    font-size: 18px;
-    opacity: 0.8;
+
+.header p {
+    color: #9ca3af;
+    font-size: 17px;
 }
+
+
+.message {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+}
+
+
+textarea {
+    background: #2f2f2f !important;
+    color: white !important;
+    border-radius: 18px !important;
+    padding: 15px !important;
+}
+
 
 footer {
     display: none !important;
