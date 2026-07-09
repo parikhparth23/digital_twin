@@ -46,11 +46,11 @@ Rules:
 
 
 def chat_stream(message, history):
-    """Yields partial assistant text as it streams in from the model."""
+    """Yields partial assistant text as it streams in from the model.
+    `history` is already in OpenAI messages format: [{"role": ..., "content": ...}, ...]
+    """
     messages = [{"role": "system", "content": system_prompt}]
-    for user_msg, assistant_msg in history:
-        messages.append({"role": "user", "content": user_msg})
-        messages.append({"role": "assistant", "content": assistant_msg})
+    messages.extend(history)
     messages.append({"role": "user", "content": message})
 
     stream = openai.chat.completions.create(
@@ -108,14 +108,17 @@ with gr.Blocks(title="AI Digital Twin of Parth Parikh") as demo:
 
     def user_turn(msg, history):
         # Immediately show the user's message, clear the box, add an empty bot slot
-        history = history + [(msg, "")]
+        history = history + [
+            {"role": "user", "content": msg},
+            {"role": "assistant", "content": ""},
+        ]
         return "", history
 
     def bot_turn(history):
-        user_msg = history[-1][0]
-        prior_history = history[:-1]
+        user_msg = history[-2]["content"]
+        prior_history = history[:-2]
         for partial in chat_stream(user_msg, prior_history):
-            history[-1] = (user_msg, partial)
+            history[-1] = {"role": "assistant", "content": partial}
             yield history
 
     send.click(
@@ -137,9 +140,9 @@ demo.launch(
     server_name="0.0.0.0",
     server_port=int(os.environ.get("PORT", 7860)),
     favicon_path=str(FAVICON_PATH) if FAVICON_PATH.exists() else None,
-    theme=gr.themes.Soft(
-        primary_hue="blue",
-        neutral_hue="slate",
+    theme=gr.themes.Base(
+        primary_hue="gray",
+        neutral_hue="gray",
     ),
     css=css,
 )
