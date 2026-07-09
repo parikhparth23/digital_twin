@@ -5,6 +5,7 @@ from IPython.display import Markdown, display
 import gradio as gr
 import json
 import os
+from pathlib import Path
 
 load_dotenv(override=True)
 openai = OpenAI()
@@ -60,9 +61,12 @@ def chat(message, history):
     return response.choices[0].message.content
 
 
+css = Path("style.css").read_text()
+
 with gr.Blocks(
     title="Parth Parikh's AI Digital Twin",
-    theme=gr.themes.Glass()
+    theme=gr.themes.Glass(),
+    css=css
 ) as demo:
 
     gr.Markdown(

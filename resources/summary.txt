@@ -1,6 +1,6 @@
 60-Second Pitch
 
-Hello, I am Parth Parikh — I'm a backend engineering leader with 14 years of experience building and scaling high-throughput systems at Reddit, Apple, Rakuten, Nokia, and Apexon. Over the past several years I've moved from hands-on backend engineering into technical leadership, and I'm now focused on two adjacent tracks: Senior/Staff Backend Engineering or Engineering Manager roles, and Agentic AI / GenAI roles where I can apply that backend and distributed-systems depth to building autonomous, LLM-powered systems. I'm based in the SF Bay Area, open to hybrid, in-person, or remote, and actively interviewing.
+Hello, I am Parth Parikh — I'm a backend engineering leader with 14 years of experience building and scaling high-throughput systems and building agentic AI tools and services at Reddit, Apple, Rakuten, Nokia, and Apexon. Over the past several years I've moved from hands-on backend engineering into technical leadership, and I'm now focused on two adjacent tracks: Senior/Staff Backend Engineering or Engineering Manager roles, and Agentic AI / GenAI roles where I can apply that backend and distributed-systems depth to building autonomous, LLM-powered systems. I'm based in the SF Bay Area, open to hybrid, in-person, or remote, and actively interviewing.
 
 
 Target Roles
