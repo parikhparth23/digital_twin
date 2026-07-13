@@ -79,3 +79,18 @@ footer {
 button {
     min-height:45px !important;
 }
+
+#new-chat-button {
+    display: none !important;
+}
+
+/* Hides the button and ensures its immediate flex container collapses */
+div:has(> #new-chat-button), 
+#new-chat-button {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}

@@ -103,7 +103,7 @@ layout = "wide"
 default_sidebar_state = "hidden"
 
 # New chat confirmation
-confirm_new_chat = true
+confirm_new_chat = false
 
 # App description
 description = "Ask about my experience, projects, and technical background."
@@ -120,7 +120,7 @@ default_avatar_file_url = "/public/favicon.png"
 avatar_size = 32
 
 # Custom CSS if needed later
-# custom_css = "/public/custom.css"
+custom_css = "/public/custom.css"
 
 alert_style = "modern"
 

@@ -1,0 +1,38 @@
+/* =========================================
+   1. TARGET ONLY THE NEW CHAT BUTTON (LEAVE THEME ALONE)
+   ========================================= */
+#new-chat-button,
+button[id="new-chat-button"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+}
+
+/* =========================================
+   2. HIDE THE UGLY SCROLLBARS
+   ========================================= */
+/* Hide the scrollbar track for Chrome, Safari, and Opera */
+.scrollbar-gutter-stable::-webkit-scrollbar,
+div::-webkit-scrollbar,
+main::-webkit-scrollbar {
+    width: 0px !important;
+    background: transparent !important; 
+}
+
+/* Hide the scrollbar track for Firefox */
+.scrollbar-gutter-stable,
+div,
+main {
+    scrollbar-width: none !important; 
+}
+
+/* Smooth out the main layout container */
+main {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
+}
