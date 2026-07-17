@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "question": "Tell me about Parth's backend engineering experience."
+    },
+    {
+        "id": 2,
+        "question": "What AI projects has Parth built?"
+    },
+    {
+        "id": 3,
+        "question": "What programming languages does Parth know?"
+    },
+    {
+        "id": 4,
+        "question": "Does Parth requires visa sponsorship right now or in future?"
+    },
+    {
+        "id": 5,
+        "question": "What are the salary expectations?"
+    },
+    {
+        "id": 6,
+        "question": "What is the capital of France?"
+    },
+    {
+        "id": 7,
+        "question": "Where does Parth live?"
+    }
+]

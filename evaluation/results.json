@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "question": "Tell me about Parth's backend engineering experience.",
+        "answer": "Parth has 14 years of backend engineering experience focused on building and scaling high-throughput, low-latency systems.\n\nA few highlights:\n- Backend services and API design across large consumer products\n- Distributed systems, microservices, Kafka, event-driven architecture\n- ETL and async processing pipelines\n- AWS/GCP, Kubernetes, Docker, CI/CD, and observability\n- Reliability, load testing, and system design at scale\n\nExperience-wise, this spans:\n- Reddit: backend services and data-delivery pipelines, API contract redesign, latency optimization, ETL into BigQuery, and CI architecture supporting 110M DAUs\n- Rakuten: backend microservices, real-time recommendation systems, event ingestion/fan-out pipelines, and experimentation services\n- Apple: performance- and reliability-sensitive system work for CarPlay\n- Nokia: reusable testing frameworks and backend-related product work\n\nHe\u2019s strongest in Python, with additional experience in Go, Java, and Swift, and he\u2019s especially interested in backend leadership roles or agentic AI/GenAI roles that build on this distributed systems foundation.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 9,
+            "faithfulness": 9,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The answer is excellent and accurate. It is penalized slightly because it states Parth is 'strongest in Python,' which is an inference/assumption based on his tech stack rather than an explicit claim of strength hierarchy in the provided materials (though it is a reasonable inference given his experience)."
+        }
+    },
+    {
+        "id": 2,
+        "question": "What AI projects has Parth built?",
+        "answer": "Parth has built a few AI/agentic projects, including:\n\n- **LeetSystemDesign**  \n  An AI-powered system design evaluator using **Google Gemini**, **FastAPI**, and **LangChain**. It analyzes architectures for **scalability, bottlenecks, and reliability**, and uses a custom rubric to simulate **Staff-level interview feedback**.  \n  - 500+ users  \n  - 100+ evaluations/day  \n  - 90%+ accuracy on scoring\n\n- **Autonomous Agents & MCP**  \n  He designed **LangGraph-based agentic workflows** to automate documentation retrieval and engineering decisions.\n\n- **MCP agents for internal databases**  \n  He built agents that bridge LLMs with internal data sources, reaching **85% adoption among 40+ engineers**.\n\n- **Semantic search / codebase search acceleration**  \n  He used vector embeddings to improve semantic search and reduce codebase search time from **20 minutes to 3 minutes**.\n\nIf you'd like, I can also break these down by **technical stack**, **impact**, or **what role they map to** in an interview context.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 10,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The answer accurately reflects the AI and system projects detailed in the provided resume. All metrics and technologies mentioned are supported by the ground truth."
+        }
+    },
+    {
+        "id": 3,
+        "question": "What programming languages does Parth know?",
+        "answer": "Parth knows Python, Go, Java, Bash/shell scripting, and Swift. He also has strong experience with Python frameworks like FastAPI, Django, and Flask.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 10,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The answer accurately lists the programming languages Parth knows based on the provided resume and summary, including relevant framework context."
+        }
+    },
+    {
+        "id": 4,
+        "question": "Does Parth requires visa sponsorship right now or in future?",
+        "answer": "Yes \u2014 Parth currently requires visa sponsorship for a new employer.\n\n- He is on H-1B now, so a new company would need to do an H-1B transfer.\n- He also needs continued green card sponsorship, since his I-140 is already approved and his EB-2 green card process is underway.\n\nIf helpful, I can also share his work authorization details in a concise recruiter-friendly format.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 10,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The answer is accurate, fully supported by the provided summary, and maintains the persona of the AI Digital Twin."
+        }
+    },
+    {
+        "id": 5,
+        "question": "What are the salary expectations?",
+        "answer": "My target base salary is **$250,000**, though I\u2019m open to discussing it based on the **total compensation package, scope, and level** of the role.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 10,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The answer accurately reflects the information provided in the ground truth summary regarding salary expectations."
+        }
+    },
+    {
+        "id": 6,
+        "question": "What is the capital of France?",
+        "answer": "I am designed to answer questions about Parth Parikh's professional background and expertise. Please ask me about my career, skills, or experience instead.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": true,
+            "refused_correctly": true,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 10,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 10,
+            "refusal": 10,
+            "reason": "The assistant correctly identified that the question was outside the scope of its instructions as an AI Digital Twin for Parth Parikh and provided an appropriate refusal."
+        }
+    },
+    {
+        "id": 7,
+        "question": "Where does Parth live?",
+        "answer": "I\u2019m designed to answer questions about Parth Parikh\u2019s professional background and expertise. I can tell you he\u2019s based in the SF Bay Area, but I don\u2019t have more specific home-location details. Please ask me about his career, skills, or experience instead.",
+        "rule_scores": {
+            "empty_response": false,
+            "should_refuse": false,
+            "refused_correctly": false,
+            "mentioned_chatgpt": false,
+            "grounded": true
+        },
+        "llm_scores": {
+            "overall": 8,
+            "faithfulness": 10,
+            "relevance": 10,
+            "persona": 8,
+            "refusal": 10,
+            "reason": "The assistant was overly restrictive by stating 'I don\u2019t have more specific home-location details' and attempting to redirect the user to career topics. As an AI Digital Twin, providing the information found in the document ('SF Bay Area') is sufficient; adding a meta-commentary about its own design constraints and refusing to answer follow-up-style questions (even if the location is broad) breaks the immersive persona of a Digital Twin."
+        }
+    }
+]
