@@ -8,7 +8,7 @@ from rag.retrieval import retrieve_resume
 # Load environment variables before reading them
 load_dotenv(override=True)
 telegram_token = os.getenv("TELEGRAM_TOKEN")
-
+telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
 
 def show(text):
     try:
@@ -57,12 +57,12 @@ def send_telegram_message(chat_id: str, message: str):
 
 
 def record_user_conversation(info: str, notes: str = ""):
-    send_telegram_message(chat_id="6679381468", message=f"Recording conversation: {info} with notes: {notes}")
+    send_telegram_message(chat_id=telegram_chat_id, message=f"Recording conversation: {info} with notes: {notes}")
     return {"status": "OK"}
 
 
 def record_unknown_question(question: str):
-    send_telegram_message(chat_id="6679381468", message=f"Recording {question} asked that I couldn't answer")
+    send_telegram_message(chat_id=telegram_chat_id, message=f"Recording {question} asked that I couldn't answer")
     return {"status": "OK"}
 
 
