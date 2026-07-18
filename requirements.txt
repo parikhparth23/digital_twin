@@ -8,7 +8,6 @@ anyio==4.14.1
 asttokens==3.0.1
 asyncer==0.0.18
 attrs==26.1.0
-audioop-lts==0.2.2
 bcrypt==5.0.0
 bidict==0.23.1
 brotli==1.2.0
