@@ -36,8 +36,14 @@ def ask_digital_twin(question: str):
         assistant = response.choices[0].message
         # If the model has finished, return the answer.
         if not assistant.tool_calls:
-            
-            return assistant.content
+            content = assistant.content
+            if content is None:
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    messages=messages,
+                )
+                content = response.choices[0].message.content
+            return content or "I don't have enough information to answer that."
 
         # Add assistant tool request.
         messages.append(assistant)
