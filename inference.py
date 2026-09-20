@@ -1,12 +1,22 @@
 from openai import OpenAI
+from google import genai
+import os
 
 from context import SYSTEM
 from tools import tools, handle_tool_calls
 
-client = OpenAI()
+# client = OpenAI()
 
-MODEL_NAME = "gpt-5.4-mini"
+# MODEL_NAME = "gpt-5.4-mini"
+client = OpenAI(
+    api_key=os.getenv("GEMINI_API_KEY"),
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+)
+# client = genai.Client(
+#     api_key=os.getenv("GEMINI_API_KEY")
+# )
 
+MODEL_NAME = "gemini-3.1-flash-lite"
 
 def ask_digital_twin(question: str):
 
