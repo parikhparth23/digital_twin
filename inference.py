@@ -41,6 +41,8 @@ def ask_digital_twin(question: str):
                 response = client.chat.completions.create(
                     model=MODEL_NAME,
                     messages=messages,
+                    tools=tools,
+                    tool_choice="none",
                 )
                 content = response.choices[0].message.content
             return content or "I don't have enough information to answer that."
